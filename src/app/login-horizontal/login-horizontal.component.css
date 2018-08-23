@@ -1,0 +1,11 @@
+.login{
+    border: 1px solid black;
+    border-radius: 2%;
+    background-color: aqua;
+    height: 100%;
+    padding: 8px;
+    width:100%;
+}
+.button{
+    margin-left: 4px;
+}

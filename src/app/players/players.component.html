@@ -1,0 +1,33 @@
+<div class="players">
+
+  <div class="panel">
+  <p class="panel-heading">Select players for your team. <br/> Your coin balance is: {{balance}} </p>
+  
+  <div class="panel-block">
+
+      <div class="columns is-multiline">
+        
+          <div class="column is-half" *ngFor="let p of players">
+         <!-- <button class="button is-fullwidth">{{p.web_name}} |    <span class="icon">
+            <i class="fab fa-bitcoin fa-sm"></i>
+          </span> <span>{{p.now_cost}}</span></button>    -->
+          
+          <a class="button is-fullwidth" (click)="choosePlayer(p)">
+              <!-- <span class="icon">
+                <i class="fab fa-bitcoin"></i>
+              </span> -->
+            
+              <span> {{p.web_name}} | 
+                 <span>{{p.now_cost/10}}</span>
+    
+    
+            </span>
+            </a>
+              </div>
+    
+       </div>
+  </div>
+
+
+  </div>
+</div>
