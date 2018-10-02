@@ -12,7 +12,7 @@
             <i class="fab fa-bitcoin fa-sm"></i>
           </span> <span>{{p.now_cost}}</span></button>    -->
           
-          <a class="button is-fullwidth" (click)="choosePlayer(p)">
+          <a class="button is-fullwidth" [ngClass]="checkIfSelected(p)? 'is-primary': 'is-danger'"(click)="choosePlayer(p)">
               <!-- <span class="icon">
                 <i class="fab fa-bitcoin"></i>
               </span> -->

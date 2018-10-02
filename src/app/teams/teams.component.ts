@@ -13,6 +13,7 @@ export class TeamsComponent implements OnInit {
   players: Generic[]
   accounts: String [];
   balance: String;
+  teamPlayers: any [];
 
   constructor(private apiService: ApiServiceService, private web3Service: Web3Service) { }
 
@@ -41,6 +42,9 @@ export class TeamsComponent implements OnInit {
         console.log(this.balance)
       })
     })
+  }
+  checkEvent(players){ //pass back selected players array
+   this.teamPlayers = players;
   }
 
 }

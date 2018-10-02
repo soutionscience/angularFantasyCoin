@@ -5,11 +5,12 @@
      <div class="columns">
         <div class="column is-one-thirds">
        <div class="pitch">
+         <app-pitch *ngIf="teamPlayers" [teamPlayers] ="teamPlayers"></app-pitch>
          
        </div>
           </div>
           <div class="column">
-       <app-players [players]="players"></app-players>
+       <app-players (myEvent)="checkEvent($event)"[players]="players"></app-players>
        </div>
        <div class="column">
           <nav class="panel">
