@@ -10,6 +10,7 @@ import { ApiServiceService } from '../services/api-service.service';
 })
 export class PlayersComponent implements OnInit {
   @Output() myEvent = new EventEmitter();
+
   @Input() players: Generic[]
   teamPlayers: Generic[];
   balance: number;
@@ -26,9 +27,9 @@ export class PlayersComponent implements OnInit {
   }
 
   choosePlayer(p){
-    console.log("selecting ",p)
-    console.log("what is the length ", this.teamPlayers.length);
-    //check if player selected is already in team players
+if(this.teamPlayers.length < 11){
+
+      //check if player selected is already in team players
       if(this.teamPlayers.indexOf(p) == -1){
         //player does not exit ..add player
         this.teamPlayers.push(p)
@@ -39,6 +40,9 @@ export class PlayersComponent implements OnInit {
         this.teamPlayers.splice(index)
       }
       this.myEvent.emit(this.teamPlayers);
+ 
+}
+
      
  
 }

@@ -11,6 +11,11 @@ export class PitchComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // this.completeTeam()
+  }
+  completeTeam(){
+    console.log(this.teamPlayers)
+
   }
 
 }

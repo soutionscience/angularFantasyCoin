@@ -1,5 +1,6 @@
 .pitch{
     padding: 4px;
+    margin: 4px;
 }
 .name{
     background-color: white;
@@ -8,4 +9,11 @@
 .player{
     
     border: blue solid 1px;
+}
+.confirm{
+    margin-top: 4px;
+}
+
+.choose{
+    margin: 8px;
 }

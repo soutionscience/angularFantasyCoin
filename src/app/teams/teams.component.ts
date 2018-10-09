@@ -14,13 +14,20 @@ export class TeamsComponent implements OnInit {
   accounts: String [];
   balance: String;
   teamPlayers: any [];
+  completeTeam: boolean;
+  myplayers: String;
+  myTeam: any [];
+
 
   constructor(private apiService: ApiServiceService, private web3Service: Web3Service) { }
 
   ngOnInit (){
+    //this.myTeam = [];
+    this.myplayers='players';
     this.getTeams();
     this.getAccounts();
     console.log("what is here? ", this.teams)
+    this.completeTeam = true;
   }
 
   getTeams()  {
@@ -45,6 +52,23 @@ export class TeamsComponent implements OnInit {
   }
   checkEvent(players){ //pass back selected players array
    this.teamPlayers = players;
+   this.teamComplete(players)
+  }
+  teamComplete(players){
+    if(players.length  == 11){
+      this.completeTeam = false
+    }else{
+      this.completeTeam = true
+    }
+
+
+  }
+  sendTeam(){
+    console.log(this.teamPlayers)
+    let team = [{"players":this.teamPlayers}]
+     this.apiService.postResource('user-teams', team).subscribe(resp=>{
+      console.log("what is resp ", resp)
+    })
   }
 
 }

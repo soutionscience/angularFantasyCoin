@@ -16,4 +16,7 @@ export class ApiServiceService {
   getTeams(apiRoute, teamCode): Observable<any[]>{
     return this.restangular.all(apiRoute).getList({team_code: teamCode})
   }
+  postResource(apiRoute, team): Observable<any[]>{
+    return this.restangular.all(apiRoute).post(team);
+  }
 }

@@ -8,9 +8,14 @@
          <app-pitch *ngIf="teamPlayers" [teamPlayers] ="teamPlayers"></app-pitch>
          
        </div>
+       <div class="confirm">
+        <button class="button is-primary" [disabled]="completeTeam" (click)="sendTeam()">
+          Confirm Team
+        </button>
+      </div>
           </div>
           <div class="column">
-       <app-players (myEvent)="checkEvent($event)"[players]="players"></app-players>
+       <app-players (myEvent)="checkEvent($event)" [players]="players"  ></app-players>
        </div>
        <div class="column">
           <nav class="panel">
