@@ -63,11 +63,17 @@ export class TeamsComponent implements OnInit {
 
 
   }
-  sendTeam(){
-    console.log(this.teamPlayers)
-    let team = [{"players":this.teamPlayers}]
-     this.apiService.postResource('user-teams', team).subscribe(resp=>{
-      console.log("what is resp ", resp)
+  sendTeam(){//send selected team to server
+   let user = [{"name":"simon"}]
+    let savedUser=[] //local varible to store user is returned by server. Will be removed later
+     this.apiService.postResource('users', user).subscribe(resp=>{
+      savedUser.push(resp)
+      //after getting user _Id use it to save team
+       this.apiService.postUserTeam('users', savedUser[0]._id, 'players', this.teamPlayers)
+      .subscribe(resp=>{
+        console.log("teams saved", resp)
+      })
+     
     })
   }
 

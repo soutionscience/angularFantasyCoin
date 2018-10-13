@@ -19,4 +19,7 @@ export class ApiServiceService {
   postResource(apiRoute, team): Observable<any[]>{
     return this.restangular.all(apiRoute).post(team);
   }
+  postUserTeam(apiRoute, id:number, item, message):Observable<any[]>{
+    return this.restangular.one(apiRoute, id).all(item).post(message)
+  }
 }
