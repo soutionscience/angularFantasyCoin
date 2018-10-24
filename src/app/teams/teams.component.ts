@@ -64,7 +64,7 @@ export class TeamsComponent implements OnInit {
 
   }
   sendTeam(){//send selected team to server
-   let user = [{"name":"simon"}]
+   let user = {'username': 'simo3', 'password':'test'}
     let savedUser=[] //local varible to store user is returned by server. Will be removed later
      this.apiService.postResource('users', user).subscribe(resp=>{
       savedUser.push(resp)
