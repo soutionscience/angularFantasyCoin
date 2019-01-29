@@ -9,6 +9,11 @@ import { Web3Service } from '../services/web3.service';
   styleUrls: ['./teams.component.scss']
 })
 export class TeamsComponent implements OnInit {
+  /// this component displays team and sends selected team to server
+
+
+
+
   teams: Generic[]
   players: Generic[]
   accounts: String [];
@@ -64,7 +69,7 @@ export class TeamsComponent implements OnInit {
 
   }
   sendTeam(){//send selected team to server
-   let user = {'username': 'simo3', 'password':'test'}
+   let user = {'username': 'simo8', 'password':'test'}
     let savedUser=[] //local varible to store user is returned by server. Will be removed later
      this.apiService.postResource('users', user).subscribe(resp=>{
       savedUser.push(resp)

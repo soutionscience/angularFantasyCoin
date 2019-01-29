@@ -3,6 +3,14 @@ import Web3 from 'web3'
 import { environment } from '../../environments/environment';
 import { bindNodeCallback, Observable } from 'rxjs';
 
+// var json = require('./[yourFileNameHere].json');
+// import * as campaignFactory from '../../ethereum/contracts/LeagueFactory.json';
+declare var require: any
+
+let campaignFactory = require('../../ethereum/contracts/LeagueFactory.json')
+let leagueFactoryContract = require('../../ethereum/contracts/build/LeagueFactory.json');
+let LeagueContract = require('../../ethereum/contracts/build/League.json')
+
 
 declare var window: any;
 
@@ -18,6 +26,7 @@ export class Web3Service {
   }
 
   checkAndInstatiateWeb3 =()=>{
+    // console.log('what is in json??' , campaignFactory)
 
      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
      if (typeof window.web3 !== 'undefined') {
@@ -37,7 +46,14 @@ export class Web3Service {
     }
 
   }
+  // connect to test rpc for development
+  connectRpc(url){
+    console.log("connecting to .. ", url)
+    this.web3 = new Web3(new Web3.providers.HttpProvider(url))
 
+  }
+
+  //get account number
   getAccounts(): Observable<any>{
   	return Observable.create(observer => {
   	  this.web3.eth.getAccounts((err, accs) => {
@@ -54,17 +70,75 @@ export class Web3Service {
   	  });
   	})
   }
+
+
+  // get balance of main account
+  getAccountBalance(addrs):Observable<any>{
+    return Observable.create(observer=>{
+      this.web3.eth.getBalance(addrs, (err, result)=>{
+        if(err){
+          observer.error('There was an error fetching your accounts.')
+          observer.error(err)
+        }else{
+          observer.next(this.web3.fromWei(result, 'ether'));
+          observer.complete();
+        }
+      })
+    })
+  }
+
   getBalance(account): Observable<any>{
   return Observable.create(observer=>{
-    this.web3.eth.getBalance(account, (err, balance)=>{
-      if(err){
-        observer.error('there was an error fetching account balance')
-      }
-      observer.next(this.web3.fromWei(balance, 'ether'));
-      observer.complete();
-    })
+    // this.web3.eth.getBalance(account, (err, balance)=>{
+    //   if(err){
+    //     observer.error('there was an error fetching account balance')
+    //   }
+    //   observer.next(this.web3.fromWei(balance, 'ether'));
+    //   observer.complete();
+    // })
   })
   }
+
+  // getContractInstance(): Observable<any>{
+  //   return Observable.create( observer=>{
+  //     new this.web3.eth.Contract(campaignFactory, process.env.ADDRESS)
+  //     observer.complete();
+
+  //   })  
+  // }
+      // create a contract instance helper function.
+    //used to createNewLeague and more...
+    createContractInstance(addr, contractJson){
+      let instance;
+      let abiDef = contractJson.abi
+      let contract = this.web3.eth.contract(abiDef);
+      instance = contract.at(addr);
+      console.log('instance created' ,instance)
+      return instance
+  
+    }
+    getAllLeagues(addr, gasToUse):Observable<any>{
+      return Observable.create(observer=>{
+        let instance = this.createContractInstance(addr, leagueFactoryContract);
+        let transactionObject ={
+          from: this.web3.eth.coinbase,
+          gas: gasToUse
+        }
+    
+    instance.GetAllLeagues.call(transactionObject, (err, result)=>{
+          if(err){
+                console.log('error getting leagues')
+                observer.error(err)
+              }else{
+                console.log('got all leagues')
+                observer.next(result);
+                observer.complete()
+              }
+  
+        })
+  
+      })
+      }
 }
 
 

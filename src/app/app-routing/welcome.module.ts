@@ -9,7 +9,10 @@ import { LoginHorizontalComponent } from '../login-horizontal/login-horizontal.c
 
 const routes: Routes=[
   {path: '', component: WelcomeComponent, children:[
-  {path:'teams', loadChildren: './teams.module#TeamsModule'}]}
+  {path:'teams', loadChildren: './teams.module#TeamsModule'},
+  {path: 'myteam', loadChildren: './myteam.module#MyteamModule'},
+  {path: 'leagues', loadChildren: './leagues.module#LeaguesModule'}
+]}
 ]
 
 @NgModule({

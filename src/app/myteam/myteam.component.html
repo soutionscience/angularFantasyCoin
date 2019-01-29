@@ -1,0 +1,43 @@
+<div class="myteam">
+  <div class="container">
+    <div class="body">
+      <div class="columns">
+        <div class="pitch">
+        <div class="column is-two-thirds">
+          <div class="players">
+             <div *ngIf="players">
+            <div class="columns is-multiline is-gapless">
+            <div class="column is-one-quarter" *ngFor="let p of players.players">
+                   <div class="player">
+                      <img src="../../assets/images/kits/{{p.team_code}}.png" width="80px">
+                      <div class="info">
+                          <div class="name"><p>{{p.web_name}}</p></div>
+                          <div class="points"><p>Points: {{p.pointsWeek}}</p></div>
+                          <span>
+                          <div class="value"><p>value: {{p.now_cost}}  
+                            <i [ngClass]="checkValue(p.now_cost, p.pointsWeek)? 'fa fa-arrow-up': 'fa fa-arrow-down'"  class="fa fa-minus" aria-hidden="true"></i></p></div>
+                          
+                        </span>
+                      </div>
+                     
+
+                   </div>
+                   
+                 </div>
+               </div> 
+                
+
+
+              
+            </div>
+          </div>
+         
+         </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>

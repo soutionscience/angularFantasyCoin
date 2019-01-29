@@ -1,0 +1,22 @@
+<div class="leagues">
+  <div class="container">
+    <div class="card">
+      <div class="header">
+        <p class="header">Please select a league to enter</p>
+      </div>
+    </div>
+    <div class="box">
+      <p class="title">Open Leagues</p>
+      <div class="columns">
+        <div class="column is-half">
+          <div class="buttons" *ngFor='let l of leagues'>
+          <button class="button" (click)="selectLeague(l)">
+            {{l}}
+          </button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
