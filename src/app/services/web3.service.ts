@@ -1,7 +1,15 @@
-import { Injectable } from '@angular/core';
+import {
+  Injectable
+} from '@angular/core';
 import Web3 from 'web3'
-import { environment } from '../../environments/environment';
-import { bindNodeCallback, Observable } from 'rxjs';
+import {
+  environment
+} from '../../environments/environment';
+import {
+  bindNodeCallback,
+  Observable,
+  observable
+} from 'rxjs';
 
 // var json = require('./[yourFileNameHere].json');
 // import * as campaignFactory from '../../ethereum/contracts/LeagueFactory.json';
@@ -21,15 +29,15 @@ export class Web3Service {
 
   public web3: Web3;
 
-  constructor() { 
+  constructor() {
     this.checkAndInstatiateWeb3();
   }
 
-  checkAndInstatiateWeb3 =()=>{
+  checkAndInstatiateWeb3 = () => {
     // console.log('what is in json??' , campaignFactory)
 
-     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-     if (typeof window.web3 !== 'undefined') {
+    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    if (typeof window.web3 !== 'undefined') {
       console.warn(
         'Using web3 detected from external source. If you find that your accounts don\'t appear or you have 0 MetaCoin, ensure you\'ve configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask'
       );
@@ -47,39 +55,45 @@ export class Web3Service {
 
   }
   // connect to test rpc for development
-  connectRpc(url){
+  connectRpc(url) {
     console.log("connecting to .. ", url)
     this.web3 = new Web3(new Web3.providers.HttpProvider(url))
 
   }
+  // get single account
+  getSingle(): Observable < any > {
+    return Observable.create(observer => {
+
+    })
+  }
 
   //get account number
-  getAccounts(): Observable<any>{
-  	return Observable.create(observer => {
-  	  this.web3.eth.getAccounts((err, accs) => {
-  	    if (err != null) {
-  	      observer.error('There was an error fetching your accounts.')
-  	    }
+  getAccounts(): Observable < any > {
+    return Observable.create(observer => {
+      this.web3.eth.getAccounts((err, accs) => {
+        if (err != null) {
+          observer.error('There was an error fetching your accounts.')
+        }
 
-  	    if (accs.length === 0) {
-  	      observer.error('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.')
-  	    }
+        if (accs.length === 0) {
+          observer.error('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.')
+        }
 
-  	    observer.next(accs)
-  	    observer.complete()
-  	  });
-  	})
+        observer.next(accs)
+        observer.complete()
+      });
+    })
   }
 
 
   // get balance of main account
-  getAccountBalance(addrs):Observable<any>{
-    return Observable.create(observer=>{
-      this.web3.eth.getBalance(addrs, (err, result)=>{
-        if(err){
+  getAccountBalance(addrs): Observable < any > {
+    return Observable.create(observer => {
+      this.web3.eth.getBalance(addrs, (err, result) => {
+        if (err) {
           observer.error('There was an error fetching your accounts.')
           observer.error(err)
-        }else{
+        } else {
           observer.next(this.web3.fromWei(result, 'ether'));
           observer.complete();
         }
@@ -87,16 +101,16 @@ export class Web3Service {
     })
   }
 
-  getBalance(account): Observable<any>{
-  return Observable.create(observer=>{
-    // this.web3.eth.getBalance(account, (err, balance)=>{
-    //   if(err){
-    //     observer.error('there was an error fetching account balance')
-    //   }
-    //   observer.next(this.web3.fromWei(balance, 'ether'));
-    //   observer.complete();
-    // })
-  })
+  getBalance(account): Observable < any > {
+    return Observable.create(observer => {
+      // this.web3.eth.getBalance(account, (err, balance)=>{
+      //   if(err){
+      //     observer.error('there was an error fetching account balance')
+      //   }
+      //   observer.next(this.web3.fromWei(balance, 'ether'));
+      //   observer.complete();
+      // })
+    })
   }
 
   // getContractInstance(): Observable<any>{
@@ -104,43 +118,78 @@ export class Web3Service {
   //     new this.web3.eth.Contract(campaignFactory, process.env.ADDRESS)
   //     observer.complete();
 
-  //   })  
+  //   })
   // }
-      // create a contract instance helper function.
-    //used to createNewLeague and more...
-    createContractInstance(addr, contractJson){
-      let instance;
-      let abiDef = contractJson.abi
-      let contract = this.web3.eth.contract(abiDef);
-      instance = contract.at(addr);
-      console.log('instance created' ,instance)
-      return instance
-  
-    }
-    getAllLeagues(addr, gasToUse):Observable<any>{
-      return Observable.create(observer=>{
-        let instance = this.createContractInstance(addr, leagueFactoryContract);
-        let transactionObject ={
-          from: this.web3.eth.coinbase,
-          gas: gasToUse
-        }
-    
-    instance.GetAllLeagues.call(transactionObject, (err, result)=>{
-          if(err){
-                console.log('error getting leagues')
-                observer.error(err)
-              }else{
-                console.log('got all leagues')
-                observer.next(result);
-                observer.complete()
-              }
-  
-        })
-  
-      })
+  // create a contract instance helper function.
+  //used to createNewLeague and more...
+  createContractInstance(addr, contractJson) {
+    let instance;
+    let abiDef = contractJson.abi
+    let contract = this.web3.eth.contract(abiDef);
+    instance = contract.at(addr);
+    console.log('instance created', instance)
+    return instance
+
+  }
+  getAllLeagues(addr, gasToUse): Observable < any > {
+    return Observable.create(observer => {
+      let instance = this.createContractInstance(addr, leagueFactoryContract);
+      let transactionObject = {
+        from: this.web3.eth.coinbase,
+        gas: gasToUse
       }
+
+      instance.GetAllLeagues.call(transactionObject, (err, result) => {
+        if (err) {
+          console.log('error getting leagues')
+          observer.error(err)
+        } else {
+          console.log('got all leagues')
+          observer.next(result);
+          observer.complete()
+        }
+
+      })
+
+    })
+  }
+
+  joinLeague(competion, addr, gasToUse): Observable < any > {
+    return Observable.create(observer => {
+      let instance = this.createContractInstance(addr, LeagueContract);
+      let account = this.web3.eth.coinbase
+      console.log('do we get accounts', account)
+      let transactionObject = {
+        from: account,
+        gas: gasToUse
+
+
+      }
+
+      instance.joinCompetition
+        .sendTransaction(competion, transactionObject, (err, resp) => {
+          if (err) {
+            console.log('error joining league')
+            observer.error(err)
+          } else {
+            observer.next(resp)
+            observer.complete()
+          }
+
+        })
+    })
+
+  }
+  createComp(addr, value, gasToUse):Observable<any>{
+    return Observable.create(observer=>{
+  let instance = this.createContractInstance(addr, LeagueContract);
+  let account = this.web3.eth.coinbase;
+  let myValue = this.web3.toWei(value, 'ether')
+  let transactionObject = {
+    from: account,
+    gas: gasToUse,
+    value: value
+  }
+    })
+  }
 }
-
-
-
-
