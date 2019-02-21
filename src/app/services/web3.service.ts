@@ -18,7 +18,7 @@ declare var require: any
 let campaignFactory = require('../../ethereum/contracts/LeagueFactory.json')
 let leagueFactoryContract = require('../../ethereum/contracts/build/LeagueFactory.json');
 let LeagueContract = require('../../ethereum/contracts/build/League.json')
-
+ let account: String
 
 declare var window: any;
 
@@ -31,6 +31,7 @@ export class Web3Service {
 
   constructor() {
     this.checkAndInstatiateWeb3();
+    account = this.web3.eth.coinbase;
   }
 
   checkAndInstatiateWeb3 = () => {
@@ -183,7 +184,7 @@ export class Web3Service {
   createComp(addr, value, gasToUse):Observable<any>{
     return Observable.create(observer=>{
   let instance = this.createContractInstance(addr, LeagueContract);
-  let account = this.web3.eth.coinbase;
+
   let myValue = this.web3.toWei(value, 'ether')
   let transactionObject = {
     from: account,
@@ -192,4 +193,70 @@ export class Web3Service {
   }
     })
   }
+  //gets number of competions in a league
+  getNumberOfCompetitions(addr): Observable<any>{
+    return Observable.create(observer=>{
+      let instance = this.createContractInstance(addr, LeagueContract)
+      instance.getCompetitionCount.call((err,resp)=>{
+       if(err){
+      observer.error(err)
+       }
+       resp= resp.toNumber()
+       observer.next(resp)
+       observer.complete();
+     })
+
+    })
+
+
+
+  }
+  //gets all competions details in a league
+  getAllCompetitons(addr, gasToUse, numOfLeagues): Observable<any> {
+    return Observable.create(observer => {
+      let instance = this.createContractInstance(addr, LeagueContract);
+      let compe = [];
+      for (let index = 0; index < numOfLeagues; index++) {
+        instance.competitions.call(index, (err, resp) => {
+          if (err) {
+            console.log('error');
+            observer.error(err)
+          } else {
+            let compeOBject = {
+              id: resp[0],
+              complete: resp[1],
+              prize: resp[3],
+              maxPlayers: resp[4]
+            }
+            compe.push(compeOBject)
+          }
+        })
+       }
+      observer.next(compe);
+      observer.complete();
+    })
+  }
+  joinCompetion(index, addr): Observable<any>{
+    return Observable.create(observer=>{
+   let instance = this.createContractInstance(addr, LeagueContract);
+   let account
+   let transactionObject ={
+    from: this.web3.eth.coinbase,
+    gas: '1000000',
+
+
+   }
+instance.joinCompetition.sendTransaction(transactionObject, (err, resp)=>{
+  if(err){
+    observer.error(err)
+  }else{
+    observer.next(resp);
+    observer.complete()
+  }
+
+})
+
+})
+  }
+
 }

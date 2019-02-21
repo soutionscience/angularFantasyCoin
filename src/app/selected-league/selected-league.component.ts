@@ -29,5 +29,9 @@ export class SelectedLeagueComponent implements OnInit {
 
 
   }
+  join(){
+    this.web3Service.joinCompetion(0, this.league)
+    .subscribe(resp=> console.log(resp))
+  }
 
 }
