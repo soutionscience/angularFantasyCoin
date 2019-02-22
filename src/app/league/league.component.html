@@ -8,20 +8,20 @@
     <div class="box">
       <p class="title">Open Leagues</p>
       <div class="columns">
-        <div class="column is-half">
+        <div class="column is-one-fifth">
           <div class="buttons" *ngFor='let l of leagues'>
           <button class="button" (click)="selectLeague(l)">
-            {{l}}
+            {{l | slice: 0:5}}
           </button>
           </div>
-          
+
         </div>
         <div class="column">
           <app-selected-league [league]="league">
-             
+
           </app-selected-league>
-          
-        
+
+
         </div>
       </div>
     </div>

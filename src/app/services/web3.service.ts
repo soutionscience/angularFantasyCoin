@@ -225,8 +225,9 @@ export class Web3Service {
             let compeOBject = {
               id: resp[0],
               complete: resp[1],
-              prize: resp[3],
-              maxPlayers: resp[4]
+              prize: resp[2],
+              maxPlayers: resp[3],
+              playerCount: resp[4]
             }
             compe.push(compeOBject)
           }
@@ -246,7 +247,7 @@ export class Web3Service {
 
 
    }
-instance.joinCompetition.sendTransaction(transactionObject, (err, resp)=>{
+instance.joinCompetition.sendTransaction( 1, transactionObject, (err, resp)=>{
   if(err){
     observer.error(err)
   }else{
@@ -258,5 +259,6 @@ instance.joinCompetition.sendTransaction(transactionObject, (err, resp)=>{
 
 })
   }
+
 
 }
