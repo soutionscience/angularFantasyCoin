@@ -225,7 +225,7 @@ export class Web3Service {
             let compeOBject = {
               id: resp[0],
               complete: resp[1],
-              prize: resp[2],
+              prize: this.web3.fromWei(resp[2], 'ether'),
               maxPlayers: resp[3],
               playerCount: resp[4]
             }
@@ -239,6 +239,7 @@ export class Web3Service {
   }
   joinCompetion(index, addr): Observable<any>{
     return Observable.create(observer=>{
+      console.log('league address ', addr)
    let instance = this.createContractInstance(addr, LeagueContract);
    let account
    let transactionObject ={
@@ -247,7 +248,7 @@ export class Web3Service {
 
 
    }
-instance.joinCompetition.sendTransaction( 1, transactionObject, (err, resp)=>{
+instance.joinCompetition.sendTransaction( index, transactionObject, (err, resp)=>{
   if(err){
     observer.error(err)
   }else{

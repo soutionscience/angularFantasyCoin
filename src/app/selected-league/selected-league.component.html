@@ -1,3 +1,4 @@
+test
 <div class="league" *ngIf="league">
 
     <div class="card">
@@ -23,15 +24,19 @@
                         <th>
                           Max Players
                         </th>
+
                       </tr>
                     </thead>
-                      <tbody *ngFor = "let c of competitions">
+
+                      <tbody *ngFor = "let c of competitions; let i = index">
                         <tr>
-                          <th >id: {{c.id | slice: 0:5}}</th>
+
+                          <th >id: test {{c.id | slice: 0:5}}</th>
                           <td>Complete: {{c.complete}}</td>
                           <td>Prize: {{c.prize}}</td>
                           <td>Max Players: {{c.maxPlayers}}</td>
                           <td>Joined: {{c.playerCount}}</td>
+                        <td><button class="button is-primary" (click)="joinCompe(i)">Join</button></td>
 
                         </tr>
                     </tbody>

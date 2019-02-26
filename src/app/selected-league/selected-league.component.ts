@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Web3Service } from '../services/web3.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -14,9 +14,12 @@ export class SelectedLeagueComponent implements OnInit {
   competitionCount: Number;
 
 
-  constructor(private web3Service: Web3Service, private fb: FormBuilder) { }
+  constructor(private web3Service: Web3Service, private fb: FormBuilder,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+ this.getCompetitons(this.league)
+
   }
   createCompForm(){
     this.compeForm = this.fb.group({
@@ -32,8 +35,9 @@ export class SelectedLeagueComponent implements OnInit {
 
 
   }
-  join(){
-    this.web3Service.joinCompetion(0, this.league)
+  joinCompe(index){
+    //console.log('joining' , index)
+    this.web3Service.joinCompetion(index, this.league)
     .subscribe(resp=> console.log(resp))
   }
   getCompetitons(league){
@@ -45,6 +49,7 @@ export class SelectedLeagueComponent implements OnInit {
      .subscribe(resp=>{
        console.log('the fuck is resp ', resp)
        this.competitions = resp;
+       this.ref.detectChanges();
      })
      })
    }
