@@ -248,7 +248,7 @@ export class Web3Service {
 
 
    }
-instance.joinCompetition.sendTransaction( index, transactionObject, (err, resp)=>{
+instance.joinCompetition.sendTransaction(index, transactionObject, (err, resp)=>{
   if(err){
     observer.error(err)
   }else{
