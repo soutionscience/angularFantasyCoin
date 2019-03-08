@@ -1,0 +1,28 @@
+.myTitle{
+  /* border-bottom: rgb(0, 209, 178) solid 1px; */
+  /* margin-bottom: 8px; */
+  text-align: center;
+}
+.myText{
+  margin-bottom: 18px;
+  text-align: center
+}
+.create{
+  padding: 4px;
+}
+form{
+  margin-top:18px;
+}
+.create_button{
+  text-align: center;
+  margin-bottom: 8px;
+}
+.separator{
+  margin: 15px;
+  border-bottom: 1px solid  rgb(0, 209, 178);
+  text-align: center;
+}
+
+.terms{
+  text-align: center;
+}

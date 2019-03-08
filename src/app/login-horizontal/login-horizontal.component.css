@@ -1,11 +1,14 @@
 .login{
-    border: 1px solid black;
+    border: 0.5px solid grey;
     border-radius: 2%;
-    background-color: aqua;
-    height: 100%;
-    padding: 8px;
-    width:100%;
-}
+    /* background-color: aqua; */
+    /* background: rgba(red, green, blue, .5); */
+    height: auto;
+    padding: 4px;
+    width:100%;}
+
 .button{
-    margin-left: 4px;
+   /* left: 1200px; */
+    padding: 8px;
+   /* position: relative; */
 }

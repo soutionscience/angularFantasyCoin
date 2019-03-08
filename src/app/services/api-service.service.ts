@@ -7,7 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class ApiServiceService {
 
-  constructor(private restangular: Restangular) { }
+  constructor(private restangular: Restangular) {
+
+   }
 
   getResource(apiRoute):Observable<any[]>{
     return this.restangular.all(apiRoute).getList()

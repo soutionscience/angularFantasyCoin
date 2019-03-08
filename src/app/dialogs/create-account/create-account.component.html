@@ -1,0 +1,44 @@
+<div class="create">
+  <div class="myTitle">
+    <p class="has-text-primary">Create Account</p>
+  </div>
+  <div class="separator">
+
+    </div>
+  <div class="myText">
+    <p>
+        Your email address is used to send you crucial and account related updates.
+        Your nickname is public and is how other users will identify you.
+    </p>
+  </div>
+<form class="form">
+    <div class="field">
+        <!-- <label class="label">Name</label> -->
+        <div class="control">
+          <input class="input is-medium" type="text" placeholder="e.g Alex Smith">
+        </div>
+      </div>
+
+      <div class="field">
+        <!-- <label class="label">Email</label> -->
+        <div class="control">
+          <input class="input is-medium" type="email" placeholder="e.g. alexsmith@gmail.com">
+        </div>
+      </div>
+
+      <div class="field is-grouped create_button">
+          <div class="column">
+            <button class="button is-primary is-large is-centered" (click)="createAccount()" [disabled]="CreatAccountForm.invalid">Create</button>
+          </div>
+      </div>
+
+
+
+</form>
+<div class="separator">
+
+  </div>
+  <div class="terms">
+    <p>by signing up you agree to our terms of service and privacy policy</p>
+  </div>
+</div>

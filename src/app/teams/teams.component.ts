@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Generic } from '../shared/generic.model';
 import { ApiServiceService } from '../services/api-service.service';
 import { Web3Service } from '../services/web3.service';
@@ -24,7 +24,7 @@ export class TeamsComponent implements OnInit {
   myTeam: any [];
 
 
-  constructor(private apiService: ApiServiceService, private web3Service: Web3Service) { }
+  constructor(private apiService: ApiServiceService, private web3Service: Web3Service, private ref: ChangeDetectorRef) { }
 
   ngOnInit (){
     //this.myTeam = [];
@@ -48,12 +48,14 @@ export class TeamsComponent implements OnInit {
     this.web3Service.getAccounts()
     .subscribe(resp=>{
       this.accounts=resp;
+      console.log('whos account is this?' ,this.accounts)
       this.web3Service.getBalance(this.accounts[0])
       .subscribe(resp=>{
         this.balance = resp;
         console.log(this.balance)
       })
     })
+    this.ref.detectChanges();
   }
   checkEvent(players){ //pass back selected players array
    this.teamPlayers = players;
@@ -69,7 +71,8 @@ export class TeamsComponent implements OnInit {
 
   }
   sendTeam(){//send selected team to server
-   let user = {'username': 'simo8', 'password':'test'}
+
+   let user = {'username': this.accounts[0], 'password':'test'}
     let savedUser=[] //local varible to store user is returned by server. Will be removed later
      this.apiService.postResource('users', user).subscribe(resp=>{
       savedUser.push(resp)
@@ -78,7 +81,7 @@ export class TeamsComponent implements OnInit {
       .subscribe(resp=>{
         console.log("teams saved", resp)
       })
-     
+
     })
   }
 

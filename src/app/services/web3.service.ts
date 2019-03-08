@@ -31,28 +31,54 @@ export class Web3Service {
 
   constructor() {
     this.checkAndInstatiateWeb3();
-    account = this.web3.eth.coinbase;
+    // account = this.web3.eth.coinbase;
   }
 
   checkAndInstatiateWeb3 = () => {
     // console.log('what is in json??' , campaignFactory)
-
-    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof window.web3 !== 'undefined') {
+
       console.warn(
-        'Using web3 detected from external source. If you find that your accounts don\'t appear or you have 0 MetaCoin, ensure you\'ve configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask'
+       'using metamsk detected'
       );
       // Use Mist/MetaMask's provider
       this.web3 = new Web3(window.web3.currentProvider);
+      return this.web3;
     } else {
       console.warn(
-        'No web3 detected. Falling back to ${environment.HttpProvider}. You should remove this fallback when you deploy live, as it\'s inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask'
+        'No web3 detected'
       );
       // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-      // this.web3 = new Web3(
-      //   new Web3.providers.HttpProvider(environment.HttpProvider)
-      // );
+      // needs to be changed to better fall back plan
+      // this.web3 = new Web3();
+
+      return null;
     }
+
+  }
+  checkMetamask():Observable<any>{
+    return Observable.create(observer=>{
+      if(typeof window.web3 !== 'undefined'){ //web 3 installed
+        let accounts = this.web3.eth.coinbase
+
+        if(accounts){ // if account is unlocked return 2
+          observer.next(2)
+          observer.complete()
+
+        }else{
+          observer.next(1)// no web3 installed
+          observer.complete()
+
+        }
+
+
+      }else{
+        observer.next(3)
+        observer.complete()
+      }
+
+    })
 
   }
   // connect to test rpc for development
@@ -60,6 +86,12 @@ export class Web3Service {
     console.log("connecting to .. ", url)
     this.web3 = new Web3(new Web3.providers.HttpProvider(url))
 
+  }
+  getCoinBase() :Observable<any>{
+    return Observable.create(observer=>{
+      observer.next(this.web3.eth.coinbase)
+      observer.complete()
+    })
   }
   // get single account
   getSingle(): Observable < any > {
