@@ -1,3 +1,37 @@
-<p>
-  install-metamask works!
-</p>
+<div class="install_metamask">
+  <div class="mytitle">
+    <div class="columns">
+      <div class="column is-four-fifths">
+          <p class="has-text-weight-semibold">Ready To Play?</p>
+          <p>You’ll need a safe place to store all of your Players and Team!</p>
+
+      </div>
+      <div class="column">
+        <button (click)="close()" class="button">Done</button>
+      </div>
+
+    </div>
+
+
+  </div>
+  <div class="separator">
+
+  </div>
+  <div class="myImage column">
+    <div class="is-half">
+    <img src="../../assets/images/design/metamask.png" width="400px" alt="metamask">
+    </div>
+
+  </div>
+  <div class="myText">
+    <p>The perfect place is in a secure wallet like MetaMask.
+      This will also act as your login to the game (no extra password needed).</p>
+  </div>
+  <div class="column">
+    <a class="button is-large is-fullwidth is-half is-primary" target="blank" href={{buttonLink}}>
+
+      <span>{{buttonText}}</span>
+    </a>
+
+  </div>
+</div>

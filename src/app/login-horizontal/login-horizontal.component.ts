@@ -31,7 +31,7 @@ export class LoginHorizontalComponent implements OnInit {
     }
     if(resp== 3){
       console.log('web3 not installed!!')
-      this.dialog.open(InstallMetamaskComponent, {width: '350px' , height: 'auto'})
+      this.dialog.open(InstallMetamaskComponent, {width: '600px' , height: 'auto'})
     }
   })
 
