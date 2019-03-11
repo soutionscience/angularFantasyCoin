@@ -12,9 +12,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateAccountComponent } from './dialogs/create-account/create-account.component';
 import { InstallMetamaskComponent } from './dialogs/install-metamask/install-metamask.component';
+import { LoginMetamaskComponent } from './dialogs/login-metamask/login-metamask.component';
+
 
 @NgModule({
-  declarations: [UnlockMetamaskComponent, CreateAccountComponent, InstallMetamaskComponent],
+  declarations: [UnlockMetamaskComponent, CreateAccountComponent, InstallMetamaskComponent, LoginMetamaskComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,7 +28,7 @@ import { InstallMetamaskComponent } from './dialogs/install-metamask/install-met
 
   ],
   providers: [],
-  entryComponents: [UnlockMetamaskComponent, InstallMetamaskComponent, CreateAccountComponent],
+  entryComponents: [UnlockMetamaskComponent, InstallMetamaskComponent, CreateAccountComponent, LoginMetamaskComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
