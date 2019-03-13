@@ -4,7 +4,7 @@ import { ApiServiceService } from '../services/api-service.service';
 @Component({
   selector: 'app-myteam',
   templateUrl: './myteam.component.html',
-  styleUrls: ['./myteam.component.css']
+  styleUrls: ['./myteam.component.scss']
 })
 export class MyteamComponent implements OnInit {
   players: any[];

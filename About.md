@@ -34,3 +34,5 @@
 6. Keep a record of player's fantasy coin 
 
 
+##Technical
+  "web3": "0.18.4",

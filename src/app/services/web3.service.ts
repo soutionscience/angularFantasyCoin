@@ -1,15 +1,8 @@
-import {
-  Injectable
-} from '@angular/core';
+import { Injectable} from '@angular/core';
 import Web3 from 'web3'
-import {
-  environment
-} from '../../environments/environment';
-import {
-  bindNodeCallback,
-  Observable,
-  observable
-} from 'rxjs';
+// import {Personal} from 'web3-eth-personal';
+import {environment} from '../../environments/environment';
+import {bindNodeCallback, Observable, observable} from 'rxjs';
 
 // var json = require('./[yourFileNameHere].json');
 // import * as campaignFactory from '../../ethereum/contracts/LeagueFactory.json';
@@ -28,10 +21,11 @@ declare var window: any;
 export class Web3Service {
 
   public web3: Web3;
+  // public personal: Personal
 
   constructor() {
     this.checkAndInstatiateWeb3();
-    // account = this.web3.eth.coinbase;
+    account = this.web3.eth.coinbase;
   }
 
   checkAndInstatiateWeb3 = () => {
@@ -44,6 +38,7 @@ export class Web3Service {
       );
       // Use Mist/MetaMask's provider
       this.web3 = new Web3(window.web3.currentProvider);
+      // this.personal = new Personal(window.web3.currentProvider, account)
       return this.web3;
     } else {
       console.warn(
@@ -291,6 +286,42 @@ instance.joinCompetition.sendTransaction(index, transactionObject, (err, resp)=>
 })
 
 })
+  }
+
+  //login or sign transaction
+  signTransaction(nounce):Observable<any>{
+    nounce= this.web3.toHex(nounce.challenge)
+    console.log('what is in nounce ', nounce)
+
+  return Observable.create(observer=>{
+      let from = this.web3.eth.coinbase
+    //  let challenge = [{
+    //     type: 'string',
+    //     name: 'challenge',
+    //     value: nounce
+    //   }];
+
+      this.web3.personal.sign(nounce, from, 'test me bitch', (err, result)=>{  //alternative tohex
+        if(err) {observer.error(err);
+         console.log('there is an error')}
+        else{
+          console.log('SIGNED ', result)
+          let signedObject={
+            nounce: nounce,
+            sign: result
+          }
+        observer.next(signedObject)
+        observer.complete()
+        }
+      })
+
+
+
+
+    })
+
+
+
   }
 
 

@@ -10,79 +10,49 @@ import { Web3Service } from '../services/web3.service';
 })
 export class TeamsComponent implements OnInit {
   /// this component displays team and sends selected team to server
-
-
-
-
-  teams: Generic[]
-  players: Generic[]
-  accounts: String [];
-  balance: String;
-  teamPlayers: any [];
-  completeTeam: boolean;
-  myplayers: String;
-  myTeam: any [];
-
-
+  allPlayers: String []
+  specialPlayers: String[];
+  SpecialKeepers: String [];
+  SpecialMids: String[];
+  SpecialDefs: String[];
+  SpecialAttacks: String[];
+  goalKeepers: String[];
+  defenders: String [];
+  mids: String[];
+  attackers: String [];
+  teams: String [];
   constructor(private apiService: ApiServiceService, private web3Service: Web3Service, private ref: ChangeDetectorRef) { }
-
   ngOnInit (){
-    //this.myTeam = [];
-    this.myplayers='players';
+    this.getAllPlayers()
     this.getTeams();
-    this.getAccounts();
-    console.log("what is here? ", this.teams)
-    this.completeTeam = true;
-  }
 
-  getTeams()  {
-    this.apiService.getResource('teams').subscribe(resp=>{this.teams = resp;})
   }
-  selectTeam(p){
-  this.apiService.getTeams('players', p).subscribe(resp=>{console.log("haha ",resp); this.players = resp})
-  }
-  checkweb3(){
-    this.web3Service.checkAndInstatiateWeb3();
-  }
-  getAccounts(){
-    this.web3Service.getAccounts()
+  getAllPlayers(){
+    this.apiService.getResource('players')
     .subscribe(resp=>{
-      this.accounts=resp;
-      console.log('whos account is this?' ,this.accounts)
-      this.web3Service.getBalance(this.accounts[0])
-      .subscribe(resp=>{
-        this.balance = resp;
-        console.log(this.balance)
-      })
+      this.allPlayers = resp;
+      console.log('all players ', this.allPlayers)
+      this.filterBYPosition(this.allPlayers)
+
     })
-    this.ref.detectChanges();
   }
-  checkEvent(players){ //pass back selected players array
-   this.teamPlayers = players;
-   this.teamComplete(players)
+  getTeams(){
+    this.apiService.getResource('teams')
+    .subscribe(resp=> this.teams =resp)
   }
-  teamComplete(players){
-    if(players.length  == 11){
-      this.completeTeam = false
-    }else{
-      this.completeTeam = true
+  //filter
+  filterBYPosition(l){
+    this.goalKeepers = this.filterList(l, 1);
+    console.log('goalkeepers ', this.goalKeepers)
+  }
+  //filter by position
+  filterList(list, id){
+  let myElement =[];
+    list.forEach(element => {
+    if(element.position == id){
+      myElement.push(element);
     }
-
-
+  });
+  return myElement
   }
-  sendTeam(){//send selected team to server
-
-   let user = {'username': this.accounts[0], 'password':'test'}
-    let savedUser=[] //local varible to store user is returned by server. Will be removed later
-     this.apiService.postResource('users', user).subscribe(resp=>{
-      savedUser.push(resp)
-      //after getting user _Id use it to save team
-       this.apiService.postUserTeam('users', savedUser[0]._id, 'players', this.teamPlayers)
-      .subscribe(resp=>{
-        console.log("teams saved", resp)
-      })
-
-    })
-  }
-
 }

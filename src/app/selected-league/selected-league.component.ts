@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-selected-league',
   templateUrl: './selected-league.component.html',
-  styleUrls: ['./selected-league.component.css']
+  styleUrls: ['./selected-league.component.scss']
 })
 export class SelectedLeagueComponent implements OnInit {
   compeForm: FormGroup

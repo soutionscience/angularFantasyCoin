@@ -126,5 +126,10 @@
       }
     }
   },
-  "defaultProject": "angularFantasyCoin"
+  "defaultProject": "angularFantasyCoin",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

@@ -5,7 +5,7 @@ import {factoryAddress, factoryAddress2} from '../shared/baseAddress'
 @Component({
   selector: 'app-league',
   templateUrl: './league.component.html',
-  styleUrls: ['./league.component.css']
+  styleUrls: ['./league.component.scss']
 })
 export class LeagueComponent implements OnInit {
   leagues: String [];

@@ -6,7 +6,7 @@ import { Web3Service } from 'src/app/services/web3.service';
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.component.html',
-  styleUrls: ['./create-account.component.css']
+  styleUrls: ['./create-account.component.scss']
 })
 export class CreateAccountComponent implements OnInit {
   CreatAccountForm: FormGroup

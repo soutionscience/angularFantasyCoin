@@ -9,7 +9,7 @@ import { LoginMetamaskComponent } from '../dialogs/login-metamask/login-metamask
 @Component({
   selector: 'app-login-horizontal',
   templateUrl: './login-horizontal.component.html',
-  styleUrls: ['./login-horizontal.component.css']
+  styleUrls: ['./login-horizontal.component.scss']
 })
 export class LoginHorizontalComponent implements OnInit {
 

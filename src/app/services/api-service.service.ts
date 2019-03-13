@@ -27,4 +27,8 @@ export class ApiServiceService {
   getSpecificResource(apiRoute, id): Observable<any[]>{
     return this.restangular.one(apiRoute, id).get()
   }
+  getTokenResource(apiRoute,id, message):Observable<any>{
+    console.log('received')
+    return this.restangular.one(apiRoute,id,).one(message).get()
+  }
 }
