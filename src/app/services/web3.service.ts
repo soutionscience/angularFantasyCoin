@@ -26,6 +26,7 @@ export class Web3Service {
 
   constructor() {
     this.checkAndInstatiateWeb3();
+    account = this.web3.eth.accounts;
 
   }
 
