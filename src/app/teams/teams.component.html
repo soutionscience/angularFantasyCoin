@@ -14,30 +14,116 @@
                            Select Team
                           </a>
                           <div class="navbar-dropdown is-boxed" >
-                              <a *ngFor="let t of teams" class="navbar-item" (click)="selectTeam(t.code)">
+                              <a *ngFor="let t of teams" class="navbar-item" (click)=" selectTeam(t.code)">
                                 {{t.name}}
                               </a>
                             </div>
                         </div>
 
                   </div>
-                  <div class="panel-block heading">
-                    <span>
-                        <div class="heading is-warning">Goal Keepers</div>
-                    </span>
+                  <div class="goalkeepers">
+                      <div class="panel-block heading">
+                          <span>
+                              <div class="heading is-warning">Goal Keepers</div>
+                          </span>
 
 
+                        </div>
+                        <div class="panel-block is-small"  *ngFor="let g of SpecialKeepers">
+                                 <!-- {{g.web_name}} | {{g.pointsTotal}} -->
+                            <table class="table is-striped">
+                              <tr class="is-hoverable">
+                                <td class="jersey"></td>
+                                <td>{{g.web_name}}</td>
+                                <td>{{g.pointsTotal}}</td>
+                                <td>{{g.now_cost}}</td>
+                              </tr>
+                            </table>
+                        </div>
+
                   </div>
-                  <div class="panel-block"  *ngFor="let g of goalKeepers">
-                           {{g.web_name}} | {{g.pointsTotal}}
+                  <div class="defenders">
+                      <div class="panel-block heading">
+                          <span>
+                              <div class="heading is-warning">Defenders</div>
+                          </span>
+
+
+                        </div>
+                        <div class="panel-block is-small"  *ngFor="let d of SpecialDefs">
+                            <!-- {{g.web_name}} | {{g.pointsTotal}} -->
+                       <table class="table is-fullwidth  is-striped">
+                         <tr class="is-hoverable">
+                           <td class="jersey"></td>
+                           <td>{{d.web_name}}</td>
+                           <td>{{d.pointsTotal}}</td>
+                           <td>{{d.now_cost}}</td>
+                         </tr>
+                       </table>
+                   </div>
+
                   </div>
+                  <div class="mids">
+                      <div class="panel-block heading">
+                          <span>
+                              <div class="heading is-warning">Midfielders</div>
+                          </span>
+
+
+                        </div>
+                        <div class="panel-block is-small"  *ngFor="let d of SpecialMids">
+                            <!-- {{g.web_name}} | {{g.pointsTotal}} -->
+                       <table class="table is-fullwidth  is-striped">
+                         <tr class="is-hoverable">
+                           <td class="jersey"></td>
+                           <td>{{d.web_name}}</td>
+                           <td>{{d.pointsTotal}}</td>
+                           <td>{{d.now_cost}}</td>
+                         </tr>
+                       </table>
+                   </div>
+
+                  </div>
+
 
 
                  </nav>
+                 <div class="Attackers">
+                    <div class="panel-block heading">
+                        <span>
+                            <div class="heading is-warning">Attackers</div>
+                        </span>
+
+
+                      </div>
+                      <div class="panel-block is-small"  *ngFor="let d of SpecialAttacks">
+                          <!-- {{g.web_name}} | {{g.pointsTotal}} -->
+                     <table class="table is-fullwidth  is-striped">
+                       <tr class="is-hoverable">
+                         <td class="jersey"></td>
+                         <td>{{d.web_name}}</td>
+                         <td>{{d.pointsTotal}}</td>
+                         <td>{{d.now_cost}}</td>
+                       </tr>
+                     </table>
+                 </div>
+
+                </div>
 
 
             </div>
 
+          </div>
+
+          <div class="column">
+            <div class="card pitch">
+            <div class="story">
+              <p class="subtitle is-4">
+                Build Team
+              </p>
+              <p>Select a maximum of 3 players from a single Team</p>
+            </div>
+            </div>
           </div>
         </div>
 

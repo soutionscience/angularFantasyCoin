@@ -18,6 +18,7 @@ export class LoginMetamaskComponent implements OnInit {
 
   ngOnInit() {
     this.getCoinBase()
+    console.log('what is coinbase ', this.coinBase)
   }
 
   getCoinBase(){

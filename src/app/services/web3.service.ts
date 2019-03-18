@@ -11,6 +11,7 @@ declare var require: any
 let campaignFactory = require('../../ethereum/contracts/LeagueFactory.json')
 let leagueFactoryContract = require('../../ethereum/contracts/build/LeagueFactory.json');
 let LeagueContract = require('../../ethereum/contracts/build/League.json')
+ let accounts: String [];
  let account: String
 
 declare var window: any;
@@ -20,12 +21,12 @@ declare var window: any;
 })
 export class Web3Service {
 
-  public web3: Web3;
+  public web3: any;
   // public personal: Personal
 
   constructor() {
     this.checkAndInstatiateWeb3();
-    account = this.web3.eth.coinbase;
+
   }
 
   checkAndInstatiateWeb3 = () => {
@@ -33,14 +34,21 @@ export class Web3Service {
      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof window.web3 !== 'undefined') {
 
+
       console.warn(
        'using metamsk detected'
       );
       // Use Mist/MetaMask's provider
       this.web3 = new Web3(window.web3.currentProvider);
-      // this.personal = new Personal(window.web3.currentProvider, account)
+      // account = this.getCoinBaseHere();
+      // console.log('coinbase ', account)
       return this.web3;
     } else {
+
+      // const provider = new Web3.providers.HttpProvider(
+      //   'https://rinkeby.infura.io/orDImgKRzwNrVCDrAk5Q'
+      // );
+      // this.web3 = new Web3(provider);
       console.warn(
         'No web3 detected'
       );
@@ -55,9 +63,11 @@ export class Web3Service {
   checkMetamask():Observable<any>{
     return Observable.create(observer=>{
       if(typeof window.web3 !== 'undefined'){ //web 3 installed
-        let accounts = this.web3.eth.coinbase
+        // let accounts = this.getCoinBaseHere()
+        console.log('what is in accounts? ', account)
 
-        if(accounts){ // if account is unlocked return 2
+        if(account){ // if account is unlocked return 2
+
           observer.next(2)
           observer.complete()
 
@@ -82,10 +92,23 @@ export class Web3Service {
     this.web3 = new Web3(new Web3.providers.HttpProvider(url))
 
   }
+  getCoinBaseHere(){
+
+   return  this.web3.eth.getCoinbase()
+.then(function(resp){
+  account = resp;
+  return account;
+});
+
+  }
   getCoinBase() :Observable<any>{
     return Observable.create(observer=>{
-      observer.next(this.web3.eth.coinbase)
-      observer.complete()
+      this.web3.eth.getAccounts((err, resp)=>{
+        if(err) observer.error(err)
+        observer.next(resp)
+        observer.complete()
+      })
+
     })
   }
   // get single account
@@ -122,7 +145,7 @@ export class Web3Service {
           observer.error('There was an error fetching your accounts.')
           observer.error(err)
         } else {
-          observer.next(this.web3.fromWei(result, 'ether'));
+          observer.next(this.web3.utils.fromWei(result, 'ether'));
           observer.complete();
         }
       })
@@ -153,8 +176,8 @@ export class Web3Service {
   createContractInstance(addr, contractJson) {
     let instance;
     let abiDef = contractJson.abi
-    let contract = this.web3.eth.contract(abiDef);
-    instance = contract.at(addr);
+   instance = new this.web3.eth.Contract(abiDef);
+    // instance = contract.at(addr);
     console.log('instance created', instance)
     return instance
 
@@ -163,7 +186,7 @@ export class Web3Service {
     return Observable.create(observer => {
       let instance = this.createContractInstance(addr, leagueFactoryContract);
       let transactionObject = {
-        from: this.web3.eth.coinbase,
+        from: account,
         gas: gasToUse
       }
 
@@ -185,7 +208,7 @@ export class Web3Service {
   joinLeague(competion, addr, gasToUse): Observable < any > {
     return Observable.create(observer => {
       let instance = this.createContractInstance(addr, LeagueContract);
-      let account = this.web3.eth.coinbase
+      let account = this.getCoinBaseHere();
       console.log('do we get accounts', account)
       let transactionObject = {
         from: account,
@@ -212,7 +235,7 @@ export class Web3Service {
     return Observable.create(observer=>{
   let instance = this.createContractInstance(addr, LeagueContract);
 
-  let myValue = this.web3.toWei(value, 'ether')
+  let myValue = this.web3.utils.toWei(value, 'ether')
   let transactionObject = {
     from: account,
     gas: gasToUse,
@@ -252,7 +275,7 @@ export class Web3Service {
             let compeOBject = {
               id: resp[0],
               complete: resp[1],
-              prize: this.web3.fromWei(resp[2], 'ether'),
+              prize: this.web3.utils.fromWei(resp[2], 'ether'),
               maxPlayers: resp[3],
               playerCount: resp[4]
             }
@@ -270,7 +293,7 @@ export class Web3Service {
    let instance = this.createContractInstance(addr, LeagueContract);
    let account
    let transactionObject ={
-    from: this.web3.eth.coinbase,
+    from: account,
     gas: '1000000',
 
 
@@ -290,18 +313,18 @@ instance.joinCompetition.sendTransaction(index, transactionObject, (err, resp)=>
 
   //login or sign transaction
   signTransaction(nounce):Observable<any>{
-    nounce= this.web3.toHex(nounce.challenge)
+    // nounce= this.web3.toHex(nounce.challenge)
     console.log('what is in nounce ', nounce)
 
   return Observable.create(observer=>{
-      let from = this.web3.eth.coinbase
+      let from = account
     //  let challenge = [{
     //     type: 'string',
     //     name: 'challenge',
     //     value: nounce
     //   }];
 
-      this.web3.personal.sign(nounce, from, 'test me bitch', (err, result)=>{  //alternative tohex
+      this.web3.eth.personal.sign( nounce.challenge, account, (err, result)=>{  //alternative tohex
         if(err) {observer.error(err);
          console.log('there is an error')}
         else{
