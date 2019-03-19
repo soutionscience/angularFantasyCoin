@@ -1,12 +1,28 @@
 <div class="choose">
-    <header class="card-header">
-      Build Your Team
-      </header>
+    <header class="card-header myTitle">
+<p class="">Build your team</p>
+    </header>
+
+    <div class="headings">
+      <div class="columns">
+        <div class="column is-half">
+         <div class="box">
+           <p class="subtitle -3">100</p>
+         </div>
+        </div>
+        <div class="column is-half">
+            <div class="box">
+              <p class="subtitle -3">100</p>
+            </div>
+           </div>
+
+      </div>
+    </div>
 <div class="pitch">
 
 
  <div class="columns is-multiline">
-   <div class="column is-one-third" *ngFor="let p of teamPlayers">
+   <div class="column is-one-quarter" *ngFor="let p of teamPlayers">
      <div class="player">
     <div class="image">
       <img [src]= "'../../assets/images/kits/' + p.team_code + '.png' "
