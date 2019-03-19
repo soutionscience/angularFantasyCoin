@@ -21,11 +21,15 @@ export class TeamsComponent implements OnInit {
   mids: String[];
   attackers: String [];
   teams: String [];
+
+  teamPlayers: String [];
+
   constructor(private apiService: ApiServiceService,
     private web3Service: Web3Service, private ref: ChangeDetectorRef) { }
   ngOnInit (){
     this.getAllPlayers()
     this.getTeams();
+    this.teamPlayers =[];
 
   }
   getAllPlayers(){ // and filter by position and rank
@@ -99,6 +103,24 @@ export class TeamsComponent implements OnInit {
   //sort with pointsTotal
   pointsTotalSort(list){
  return list.sort((a,b)=>{return b.pointsTotal-a.pointsTotal})
+
+  }
+  selectPlayer(g){// select players to add to team
+   if(this.teamPlayers.length>= 11){
+     console.log('team already full')
+
+   }else{
+    if(this.teamPlayers.indexOf(g)> -1){
+      console.log('already in team')
+
+
+    }else{
+      this.teamPlayers.push(g);
+    }
+
+  }
+
+
 
   }
 }

@@ -1,16 +1,21 @@
 <div class="choose">
+    <header class="card-header">
+      Build Your Team
+      </header>
 <div class="pitch">
+
 
  <div class="columns is-multiline">
    <div class="column is-one-third" *ngFor="let p of teamPlayers">
      <div class="player">
-    <div class="image"> 
-      <img src="../../assets/images/player.png" alt="" height="20px"> </div>
+    <div class="image">
+      <img [src]= "'../../assets/images/kits/' + p.team_code + '.png' "
+      alt="" height="5px" width="5px"> </div>
     <div class="name">{{p.web_name}}</div>
     </div>
    </div>
  </div>
-         
+
 </div>
 
 

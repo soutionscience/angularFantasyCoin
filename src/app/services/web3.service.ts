@@ -314,18 +314,19 @@ instance.joinCompetition.sendTransaction(index, transactionObject, (err, resp)=>
 
   //login or sign transaction
   signTransaction(nounce):Observable<any>{
-    // nounce= this.web3.toHex(nounce.challenge)
-    console.log('what is in nounce ', nounce)
+    nounce= this.web3.toHex(nounce.challenge)
+    //console.log('what is in nounce ', nounce)
 
   return Observable.create(observer=>{
       let from = account
+			console.log('TCL: Web3Service -> account', account)
     //  let challenge = [{
     //     type: 'string',
     //     name: 'challenge',
     //     value: nounce
     //   }];
 
-      this.web3.eth.personal.sign( nounce.challenge, account, (err, result)=>{  //alternative tohex
+      this.web3.personal.sign(nounce, account[0],(err, result)=>{  //alternative tohex
         if(err) {observer.error(err);
          console.log('there is an error')}
         else{

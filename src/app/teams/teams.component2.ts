@@ -33,6 +33,7 @@ export class TeamsComponent implements OnInit {
     this.getAccounts();
     this.completeTeam = true;
     this.getAllPlayers();
+
   }
 
   getTeams()  {
