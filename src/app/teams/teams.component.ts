@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Generic } from '../shared/generic.model';
 import { ApiServiceService } from '../services/api-service.service';
 import { Web3Service } from '../services/web3.service';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { RemovePlayerComponent } from '../dialogs/remove-player/remove-player.component';
 
 @Component({
   selector: 'app-teams',
@@ -23,13 +25,15 @@ export class TeamsComponent implements OnInit {
   teams: String [];
 
   teamPlayers: String [];
+  selected: Boolean;
 
   constructor(private apiService: ApiServiceService,
-    private web3Service: Web3Service, private ref: ChangeDetectorRef) { }
+    private web3Service: Web3Service, private ref: ChangeDetectorRef, private dialog:MatDialog) { }
   ngOnInit (){
     this.getAllPlayers()
     this.getTeams();
     this.teamPlayers =[];
+    this.selected = false;
 
   }
   getAllPlayers(){ // and filter by position and rank
@@ -110,8 +114,19 @@ export class TeamsComponent implements OnInit {
      console.log('team already full')
 
    }else{
-    if(this.teamPlayers.indexOf(g)> -1){
-      console.log('already in team')
+    if(this.teamPlayers.indexOf(g)> -1){ //check if player is in team and start dialog to remove
+       console.log('already in team')
+      this.dialog.open(RemovePlayerComponent,{width: '350px', height: 'auto', data:{
+        player: g
+      }}).afterClosed().subscribe((p)=>{
+       if(p == 'remove'){
+         let index = this.teamPlayers.indexOf(g)
+         this.teamPlayers.splice(g, 1); //remove player
+         console.log(this.teamPlayers.length)
+         this.ref.detectChanges();
+       }
+
+      })
 
 
     }else{
@@ -122,5 +137,13 @@ export class TeamsComponent implements OnInit {
 
 
 
+
+  }
+  checkIfPlayerisSelected(p){
+    if(this.teamPlayers.indexOf(p)> -1){
+      return true;
+    }else{
+    return false;
+    }
   }
 }

@@ -1,0 +1,39 @@
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      Remove Player?
+    </p>
+    <a (click)="close()" class="card-header-icon" aria-label="more options">
+      <span class="icon">
+        <i class="fas fa-times" aria-hidden="true" ></i>
+      </span>
+    </a>
+  </header>
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img [src]= "'../../assets/images/kits/' + player.team_code + '.png' "
+          alt="Player Jersey">
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4">{{player.web_name}}</p>
+        <p class="subtitle is-6">{{player.now_cost}}</p>
+      </div>
+    </div>
+
+    <div class="content">
+      Player already in your team
+      <br>
+      Do you want to remove this player from your team?
+      <br>
+
+    </div>
+  </div>
+  <footer class="card-footer">
+    <a class="card-footer-item has-background-danger has-text-white" (click)="removePlayer(player)">Remove</a>
+    <a class="card-footer-item has-background-light has-text-black" (click)="close('cancel')">Cancel</a>
+
+  </footer>
+</div>

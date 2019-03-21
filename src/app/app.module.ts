@@ -13,10 +13,11 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateAccountComponent } from './dialogs/create-account/create-account.component';
 import { InstallMetamaskComponent } from './dialogs/install-metamask/install-metamask.component';
 import { LoginMetamaskComponent } from './dialogs/login-metamask/login-metamask.component';
+import { RemovePlayerComponent } from './dialogs/remove-player/remove-player.component';
 
 
 @NgModule({
-  declarations: [UnlockMetamaskComponent, CreateAccountComponent, InstallMetamaskComponent, LoginMetamaskComponent],
+  declarations: [UnlockMetamaskComponent, CreateAccountComponent, InstallMetamaskComponent, LoginMetamaskComponent, RemovePlayerComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,7 +29,8 @@ import { LoginMetamaskComponent } from './dialogs/login-metamask/login-metamask.
 
   ],
   providers: [],
-  entryComponents: [UnlockMetamaskComponent, InstallMetamaskComponent, CreateAccountComponent, LoginMetamaskComponent],
+  entryComponents: [UnlockMetamaskComponent, InstallMetamaskComponent,
+                    CreateAccountComponent, LoginMetamaskComponent, RemovePlayerComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -32,7 +32,7 @@
                         <div class="panel-block is-small" >
                                  <!-- {{g.web_name}} | {{g.pointsTotal}} -->
                             <table class="table is-striped is-narrow is-hoverable is-fullwidth">
-                              <tr class="is-hoverable"  (click)="selectPlayer(g)" *ngFor="let g of SpecialKeepers">
+                              <tr class="is-hoverable" [ngClass]="checkIfPlayerisSelected(g)? 'is-selected':'not-selected'"  (click)="selectPlayer(g)" *ngFor="let g of SpecialKeepers">
                                 <td class="jersey"></td>
                                 <td>{{g.web_name}}</td>
                                 <td>{{g.pointsTotal}}</td>
@@ -53,7 +53,7 @@
                         <div class="panel-block is-small" >
                             <!-- {{g.web_name}} | {{g.pointsTotal}} -->
                        <table class="table is-striped is-narrow is-hoverable is-fullwidth">
-                         <tr class="is-hoverable" (click)="selectPlayer(d)" *ngFor="let d of SpecialDefs">
+                         <tr class="is-hoverable" [ngClass]="checkIfPlayerisSelected(d)? 'is-selected':'not-selected'" (click)="selectPlayer(d)" *ngFor="let d of SpecialDefs">
                            <td class="jersey"></td>
                            <td>{{d.web_name}}</td>
                            <td>{{d.pointsTotal}}</td>
@@ -74,7 +74,7 @@
                         <div class="panel-block is-small"  >
                             <!-- {{g.web_name}} | {{g.pointsTotal}} -->
                        <table class="table is-striped is-narrow is-hoverable is-fullwidth">
-                         <tr class="is-hoverable" (click)="selectPlayer(d)" *ngFor="let d of SpecialMids">
+                         <tr class="is-hoverable" [ngClass]="checkIfPlayerisSelected(d)? 'is-selected':'not-selected'" (click)="selectPlayer(d)" *ngFor="let d of SpecialMids">
                            <td class="jersey"></td>
                            <td>{{d.web_name}}</td>
                            <td>{{d.pointsTotal}}</td>
@@ -99,7 +99,7 @@
                       <div class="panel-block is-small">
                           <!-- {{g.web_name}} | {{g.pointsTotal}} -->
                      <table class="table is-striped is-narrow is-hoverable is-fullwidth">
-                       <tr class="is-hoverable" (click)="selectPlayer(d)" *ngFor="let d of SpecialAttacks">
+                       <tr class="is-hoverable" [ngClass]="checkIfPlayerisSelected(d)? 'is-selected':'not-selected'" (click)="selectPlayer(d)" *ngFor="let d of SpecialAttacks">
                          <td class="jersey" ></td>
                          <td>{{d.web_name}}</td>
                          <td>{{d.pointsTotal}}</td>
